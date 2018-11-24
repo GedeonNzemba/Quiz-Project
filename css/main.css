@@ -1,0 +1,24 @@
+.questions_items {
+    display: inline-flex;
+   justify-content: space-between;
+   transform: translate()
+}
+
+* { margin:0; padding:0; }
+
+html, body { 
+    width:100vw; height:100vh; 
+} /* just to be sure these are full screen*/
+
+.fas {
+    width: 200px;
+    /* transform: translate(0px, 300px); */
+}
+
+#button {
+    transform: translate(450px, 300px);
+}
+
+body {
+    background-color: #607D8B;
+}
