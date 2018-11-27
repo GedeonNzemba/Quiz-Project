@@ -9,11 +9,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css">
     <link rel="stylesheet" type="text/css" media="screen" href="php/process.php" />
     <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
+    <!-- <script src="script/script.js"></script> -->
     <script src="script/script.js"></script>
 </head>
 <body>
             <!---------CANVAS------------>
-            <!----will be added-------->
+            <canvas id="test"></canvas>
+          
             <!---------CANVAS------------>
 
 <!----PHP CODE----->
@@ -22,8 +24,11 @@
 
 
 <!-----QUESTIONS------->
-   <article class="message">
-        <center><b class="title">welcome To The Human Body Quiz</b></center><br>
+<center><b class="title"><h1>welcome To The Human Body Quiz</h1></b></center><br>
+
+
+<aside class="container_quiz">
+   <article class="message" id="question1">
         <br>
         <div class="message-body">
             <form action='php/process.php?id=1' method='post' id='quizForm' id='1'>
@@ -50,7 +55,7 @@
 <!-----QUESTIONS------->
 <!-----QUESTIONS------->
 
-    <article class="message is-link">
+    <article class="message is-link" id="question2">
         <div class="message-body">
                 <div class="containerTwo" id="questions">
                     <h3 class="message-header is-success"> The colored part of the human eye that controls how much light passes through the pupil is called the?</h3>
@@ -72,7 +77,7 @@
     </article>
 <!-----QUESTIONS------->
 
-    <article class="message is-warning">
+    <article class="message is-warning" id="question3">
         <div class="message-body">
                 <div class="containerThree" id="questions">
                     <h3 class="message-header">What is the name of the substance that gives skin and hair its pigment?</h3>
@@ -94,7 +99,7 @@
     </article>
 <!-----QUESTIONS------->
 
-    <article class="message is-danger">
+    <article class="message is-danger" id="question4">
         <div class="message-body">
                 <div class="containerFour" id="questions">
                         <h3 class="message-header">The muscles found in the front of your thighs are known as what?</h3>
@@ -466,11 +471,101 @@
                 </div>
         </div>
     </article>
+</aside>
     <!-----QUESTIONS FOR QUIZ ENDS HERE------>
 
                 <center><input class="button is-large is-primary is-outlined" type="submit" value="SUBMIT"></center>
             </form>    
         </div>
+
+        <script>
+                    var w = window.innerWidth,
+            h = window.innerHeight,
+            canvas = document.getElementById('test'),
+            ctx = canvas.getContext('2d'),
+            rate = 60,
+            arc = 100,
+            time,
+            count,
+            size = 7,
+            speed = 20,
+            parts = new Array,
+            colors = ['red','#f57900','yellow','#ce5c00','#5c3566'];
+        var mouse = { x: 0, y: 0 };
+
+        canvas.setAttribute('width',w);
+        canvas.setAttribute('height',h);
+
+        function create() {
+        time = 0;
+        count = 0;
+
+        for(var i = 0; i < arc; i++) {
+            parts[i] = {
+            x: Math.ceil(Math.random() * w),
+            y: Math.ceil(Math.random() * h),
+            toX: Math.random() * 5 - 1,
+            toY: Math.random() * 2 - 1,
+            c: colors[Math.floor(Math.random()*colors.length)],
+            size: Math.random() * size
+            }
+        }
+        }
+
+        function particles() {
+        ctx.clearRect(0,0,w,h);
+        canvas.addEventListener('mousemove', MouseMove, false);
+        for(var i = 0; i < arc; i++) {
+            var li = parts[i];
+            var distanceFactor = DistanceBetween( mouse, parts[i] );
+            var distanceFactor = Math.max( Math.min( 15 - ( distanceFactor / 10 ), 10 ), 1 );
+            ctx.beginPath();
+            ctx.arc(li.x,li.y,li.size*distanceFactor,0,Math.PI*2,false);
+            ctx.fillStyle = li.c;
+            ctx.strokeStyle=li.c;
+            if(i%2==0)
+            ctx.stroke();
+            else
+            ctx.fill();
+            
+            li.x = li.x + li.toX * (time * 0.05);
+            li.y = li.y + li.toY * (time * 0.05);
+            
+            if(li.x > w){
+            li.x = 0; 
+            }
+            if(li.y > h) {
+            li.y = 0; 
+            }
+            if(li.x < 0) {
+            li.x = w; 
+            }
+            if(li.y < 0) {
+            li.y = h; 
+            }
+        
+            
+        }
+        if(time < speed) {
+            time++;
+        }
+        setTimeout(particles,1000/rate);
+        }
+        function MouseMove(e) {
+        mouse.x = e.layerX;
+        mouse.y = e.layerY;
+
+        //context.fillRect(e.layerX, e.layerY, 5, 5);
+        //Draw( e.layerX, e.layerY );
+        }
+        function DistanceBetween(p1,p2) {
+        var dx = p2.x-p1.x;
+        var dy = p2.y-p1.y;
+        return Math.sqrt(dx*dx + dy*dy);
+        }
+        create();
+        particles();
+        </script>
         
         
 

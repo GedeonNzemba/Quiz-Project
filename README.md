@@ -13,3 +13,12 @@ _Still has to do_
 >Work on my result page
 add more feature such as sounds, and Good vibe for the user that will get full marks
 >Added a progress bar, but still have to connect it with the user score to show the progress result of the user
+
+i have insert a canvas effect using javascript. and move and align questions on top of the canvas.
+Technology used
+    1) Bulma
+    2) Bulma responsiveness
+    3) PHP
+    4) Javascript (for canvas only)
+    5) Html
+    6) CSS
